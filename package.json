@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "Cross-platform TinyPNG client 🎍",
   "scripts": {
-
+    "build": "parcel build src/index.html --out-dir=electron/dist --public-url='./'",
+    "start": "parcel src/index.html --out-dir=tmp"
   },
   "keywords": [
     "tinypng",
