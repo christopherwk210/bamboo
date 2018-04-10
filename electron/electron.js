@@ -6,6 +6,7 @@ const path = require('path');
 const url = require('url');
 
 let mainWindow;
+let env = ~process.argv.indexOf('--dev') ? 'dev' : 'prod';
 
 function createWindow () {
   mainWindow = new BrowserWindow({
@@ -17,11 +18,19 @@ function createWindow () {
     fullscreenable: false
   });
 
-  mainWindow.loadURL(url.format({
+  let urls = {};
+  urls.prod = url.format({
     pathname: path.join(__dirname, 'dist/index.html'),
     protocol: 'file:',
     slashes: true
-  }));
+  });
+  urls.dev = 'http://localhost:1234/'
+
+  mainWindow.loadURL(env === 'dev' ? urls.dev : urls.prod);
+
+  if (env === 'dev') {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.on('closed', function() {
     mainWindow = null;
