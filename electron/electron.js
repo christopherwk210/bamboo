@@ -11,11 +11,14 @@ let env = ~process.argv.indexOf('--dev') ? 'dev' : 'prod';
 function createWindow () {
   mainWindow = new BrowserWindow({
     width: 600,
-    height: 600,
-    resizable: false,
+    height: 500,
+    resizable: true,
     maximizable: false,
     center: true,
-    fullscreenable: false
+    fullscreenable: false,
+    maxWidth: 1024,
+    minHeight: 500,
+    minWidth: 600
   });
 
   let urls = {};
@@ -24,7 +27,7 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   });
-  urls.dev = 'http://localhost:1234/'
+  urls.dev = 'http://localhost:1234/';
 
   mainWindow.loadURL(env === 'dev' ? urls.dev : urls.prod);
 

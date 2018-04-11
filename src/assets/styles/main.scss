@@ -1,7 +1,65 @@
+@import './font';
+
 * {
   user-select: none;
+  cursor: default;
+  font-family: 'Hind Guntur';
+}
+
+a, button {
+  cursor: pointer;
 }
 
 html, body {
   margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: linear-gradient(to bottom, #e4ffe0, white);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+}
+
+toolbar {
+  background: white;
+  display: block;
+
+  a {
+    display: inline-block;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: black;
+    padding: 0.75em 1em;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: rgba(0,0,0,0.1);
+    }
+  }
+}
+
+image-list {
+  flex: 1;
+  overflow-y: scroll;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 0.5em;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(0,0,0,0.05);
+      }
+    }
+  }
 }
