@@ -1,4 +1,4 @@
-import { webFrame, ipcRenderer } from 'electron';
+import { webFrame, ipcRenderer, shell } from 'electron';
 import Vue from 'vue/dist/vue';
 import feather from 'feather-icons';
 
@@ -26,7 +26,9 @@ let app = new Vue({
     addImage: function(path) {
       let img = new ImageItem(path);
       this.imageList.push(img);
-    }
+    },
+    showAbout: () => ipcRenderer.send('showAbout'),
+    showApiPage: () => shell.openExternal('https://tinypng.com/developers', e => {})
   }
 });
 

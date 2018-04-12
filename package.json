@@ -3,15 +3,16 @@
   "version": "0.0.0",
   "description": "Cross-platform TinyPNG client 🎍",
   "scripts": {
-    "build.win": "npm run build.parcel && npm run build.electron.win32",
-    "build.mac": "npm run build.parcel && npm run build.electron.mac",
+    "build.win": "npm run build.parcel && npm run create.package.json && npm run build.electron.win32",
+    "build.mac": "npm run build.parcel && npm run create.package.json && npm run build.electron.mac",
     "build.electron.mac": "electron-packager ./electron --platform=darwin --out=./bin --ignore=/bin --asar --overwrite=true",
     "build.electron.win": "electron-packager ./src --platform=win32 --arch=x64 --out=./bin --ignore=/bin --asar --overwrite=true",
     "build.electron.win32": "electron-packager ./src --platform=win32 --arch=ia32 --out=./bin --ignore=/bin --asar --overwrite=true",
     "build.parcel": "parcel build src/index.html --out-dir=electron/dist --public-url='./' --target electron",
+    "create.package.json": "node tools/create-electron-package-file.js",
     "electron": "electron electron/ --dev",
     "parcel": "parcel src/index.html --out-dir=tmp --target electron",
-    "start": "concurrently \"npm run parcel\" \"npm run electron\" "
+    "start": "npm run create.package.json && concurrently \"npm run parcel\" \"npm run electron\" "
   },
   "keywords": [
     "tinypng",

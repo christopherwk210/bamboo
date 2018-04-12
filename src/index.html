@@ -17,7 +17,7 @@
           <p>In order to use this app, you must have a valid Tinify API key.</p>
           <p>Enter your API key below:</p>
           <input v-model.trim="apiInputValue" type="text">
-          <p><small><a href="https://tinypng.com/developers">Click here</a> to get an API key.</small></p>
+          <p><small><a href="#" @click="showApiPage()">Click here</a> to get an API key.</small></p>
           <button v-if="apiInputValue" @click="apiKey = apiInputValue">Done</button>
         </div>
       </div>
@@ -42,7 +42,7 @@
       <div class="toolbar">
         <a href="#" @click="loadImages()"><i data-feather="plus-square"></i> <span>Add Images</span></a>
         <a href="#"><i data-feather="settings"></i> <span>Settings</span></a>
-        <a href="#"><i data-feather="help-circle"></i> <span>About</span></a>
+        <a href="#" @click="showAbout()"><i data-feather="help-circle"></i> <span>About</span></a>
       </div>
     </div>
     <script src="assets/scripts/main.js"></script>

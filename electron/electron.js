@@ -1,7 +1,8 @@
 // Imports
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron');
 const path = require('path');
 const url = require('url');
+const package = require('./package.json');
 
 let mainWindow;
 let env = ~process.argv.indexOf('--dev') ? 'dev' : 'prod';
@@ -55,6 +56,25 @@ function registerIpcListeners() {
     }, paths => {
       e.sender.send('filesSelected', paths);
     });
+  });
+
+  ipcMain.on('showAbout', e => {
+    let result = dialog.showMessageBox(mainWindow, {
+      type: 'info',
+      buttons: [
+        'Dismiss',
+        'View Source'
+      ],
+      cancelId: 0,
+      defaultId: 0,
+      title: 'Bamboo - About',
+      message: `Bamboo v${package.version}\nCreated by Chris Anselmo`,
+      detail: 'Bamboo is not affiliated with Tinify, TinyPNG, or TinyJPG'
+    });
+
+    if (result === 1) {
+      shell.openExternal('https://www.github.com/', e => {});
+    }
   });
 }
 
