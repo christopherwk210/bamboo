@@ -10,19 +10,41 @@
     <link rel="stylesheet" href="assets/styles/main.scss">
   </head>
   <body>
-    <toolbar>
-      <a href="#">Add Images</a>
-      <a href="#">Settings</a>
-      <a href="#">About</a>
-    </toolbar>
+    <div id="app">
+      <div v-if="!apiKey" class="require-api-key">
+        <div>
+          <i data-feather="alert-circle"></i>
+          <p>In order to use this app, you must have a valid Tinify API key.</p>
+          <p>Enter your API key below:</p>
+          <input v-model.trim="apiInputValue" type="text">
+          <p><small><a href="https://tinypng.com/developers">Click here</a> to get an API key.</small></p>
+          <button v-if="apiInputValue" @click="apiKey = apiInputValue">Done</button>
+        </div>
+      </div>
 
-    <image-list>
-      <ul>
-        <li>image1.png</li>
-        <li>image2.png</li>
-      </ul>
-    </image-list>
+      <div v-if="!imageList.length" class="drag-drop">
+        <p>
+          <i data-feather="droplet"></i> <span>Drop a PNG or JPG here!</span>
+        </p>
+      </div>
+  
+      <div v-if="imageList.length" class="image-list">
+        <ul>
+          <li v-for="image in imageList">
+            <i v-if="image.status === 'done'" data-feather="check-circle"></i>
+            <i v-if="image.status === 'loading'" data-feather="loader"></i>
+            <i v-if="image.status === 'error'" data-feather="x-circle"></i>
+            <span>{{ image.fileName }}</span>
+          </li>
+        </ul>
+      </div>
 
+      <div class="toolbar">
+        <a href="#"><i data-feather="plus-square"></i> <span>Add Images</span></a>
+        <a href="#"><i data-feather="settings"></i> <span>Settings</span></a>
+        <a href="#"><i data-feather="help-circle"></i> <span>About</span></a>
+      </div>
+    </div>
     <script src="assets/scripts/main.js"></script>
   </body>
 </html>
