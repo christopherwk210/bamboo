@@ -1,3 +1,10 @@
+// Packages that are required by the renderer process
+const requiredDependencies = [
+  'electron-settings',
+  'feather-icons',
+  'vue'
+];
+
 // Imports
 const path = require('path');
 const fs = require('fs');
@@ -13,8 +20,14 @@ const destinationPath = path.join(__dirname, '../electron/package.json');
 
 let electronPackage = {
   main: 'electron.js',
-  version: package.version
+  version: package.version,
+  dependencies: {}
 };
+
+// Apply dependencies
+requiredDependencies.forEach(dep => {
+  electronPackage.dependencies[dep] = package.dependencies[dep];
+});
 
 (async () => {
   let fileExists = await exists(destinationPath);

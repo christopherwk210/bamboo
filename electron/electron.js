@@ -2,6 +2,7 @@
 const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron');
 const path = require('path');
 const url = require('url');
+
 const package = require('./package.json');
 
 let mainWindow;
@@ -31,9 +32,9 @@ function createWindow () {
 
   mainWindow.loadURL(env === 'dev' ? urls.dev : urls.prod);
 
-  if (env === 'dev') {
+  // if (env === 'dev') {
     mainWindow.webContents.openDevTools();
-  }
+  // }
 
   mainWindow.on('closed', () => {
     app.quit();

@@ -1,6 +1,10 @@
 .DS_Store
 bin/
 
+# Electron files
+etc/
+electron/package-lock.json
+
 # Parcel
 .cache/
 tmp/

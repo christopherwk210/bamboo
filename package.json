@@ -3,16 +3,19 @@
   "version": "0.0.0",
   "description": "Cross-platform TinyPNG client 🎍",
   "scripts": {
-    "build.win": "npm run build.parcel && npm run create.package.json && npm run build.electron.win32",
-    "build.mac": "npm run build.parcel && npm run create.package.json && npm run build.electron.mac",
+    "build.win": "npm run build.parcel && npm run build.electron.win32",
+    "build.mac": "npm run build.parcel && npm run build.electron.mac",
     "build.electron.mac": "electron-packager ./electron --platform=darwin --out=./bin --ignore=/bin --asar --overwrite=true",
     "build.electron.win": "electron-packager ./src --platform=win32 --arch=x64 --out=./bin --ignore=/bin --asar --overwrite=true",
     "build.electron.win32": "electron-packager ./src --platform=win32 --arch=ia32 --out=./bin --ignore=/bin --asar --overwrite=true",
-    "build.parcel": "parcel build src/index.html --out-dir=electron/dist --public-url='./' --target electron",
+    "build.parcel": "npm run prepare && parcel build src/index.html --out-dir=electron/dist --public-url='./' --target electron",
+    "clean": "node tools/clean.js",
     "create.package.json": "node tools/create-electron-package-file.js",
     "electron": "electron electron/ --dev",
+    "install.electron.dependencies": "npm --prefix ./electron install ./electron",
     "parcel": "parcel src/index.html --out-dir=tmp --target electron",
-    "start": "npm run create.package.json && concurrently \"npm run parcel\" \"npm run electron\" "
+    "prepare": "npm run clean && npm run create.package.json && npm run install.electron.dependencies",
+    "start": "npm run prepare && concurrently \"npm run parcel\" \"npm run electron\" "
   },
   "keywords": [
     "tinypng",
@@ -29,9 +32,11 @@
     "concurrently": "^3.5.1",
     "electron": "^1.8.4",
     "electron-packager": "^12.0.0",
+    "electron-settings": "^3.1.4",
     "feather-icons": "^4.7.0",
     "node-sass": "^4.8.3",
     "parcel-bundler": "^1.7.0",
+    "rimraf": "^2.6.2",
     "vue": "^2.5.16"
   }
 }

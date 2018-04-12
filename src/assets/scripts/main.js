@@ -3,6 +3,7 @@ import Vue from 'vue/dist/vue';
 import feather from 'feather-icons';
 
 import { ImageItem } from './image-item.class';
+import settings from 'electron-settings';
 
 // Prevent zooming on mac
 webFrame.setVisualZoomLevelLimits(1, 1);
