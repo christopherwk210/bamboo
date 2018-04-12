@@ -16,7 +16,7 @@
           <p>Enter your API key below:</p>
           <input v-model.trim="apiInputValue" type="text">
           <p><small><a href="#" @click="showApiPage()">Click here</a> to get an API key.</small></p>
-          <button v-if="apiInputValue" @click="apiKey = apiInputValue">Done</button>
+          <button v-if="apiInputValue" @click="changeApiKey(apiInputValue)">Done</button>
         </div>
       </div>
 

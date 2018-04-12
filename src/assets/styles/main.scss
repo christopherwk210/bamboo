@@ -14,6 +14,10 @@ a, button {
   cursor: pointer;
 }
 
+input {
+  cursor: text;
+}
+
 html, body {
   margin: 0;
   height: 100%;
@@ -39,7 +43,7 @@ body {
   left: 0;
   right: 0;
 
-  background: linear-gradient(to bottom, #ffe0e0, white);
+  background: linear-gradient(to bottom, #c5f7ff, white);
   background-size: 100%;
   background-repeat: no-repeat;
 
@@ -68,7 +72,6 @@ body {
     padding: 0.5em;
     font-family: monospace;
     font-size: 1em;
-    cursor: text;
     text-align: center;
     border: 1px solid rgba(0,0,0,0.1);
 

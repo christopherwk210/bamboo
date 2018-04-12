@@ -29,7 +29,7 @@ let app = new Vue({
   el: '#app',
   data: {
     imageList: [],
-    apiKey: '',
+    apiKey: settings.get('api-key') || '',
     apiInputValue: ''
   },
   methods: {
@@ -37,9 +37,15 @@ let app = new Vue({
     loadImages: function() {
       ipcRenderer.send('loadFile');
     },
+
     addImage: function(path) {
       let img = new ImageItem(path);
       this.imageList.push(img);
+    },
+
+    changeApiKey: function(newKey) {
+      this.apiKey = newKey;
+      settings.set('api-key', newKey);
     },
 
     /** Trigger the about dialog */
@@ -47,18 +53,15 @@ let app = new Vue({
 
     /** Open the tinify developer page */
     showApiPage: () => shell.openExternal('https://tinypng.com/developers', e => {})
-  }
+  },
+
+  // Only show the application window when Vue has mounted
+  mounted: () => remote.getCurrentWindow().show()
 });
 
 // Register ipc callbacks
 ipcRenderer.on('filesSelected', (e, args) => {
   if (args) args.forEach(path => app.addImage(path))
 });
-
-function addImageListItem() {
-  app.imageList.push({ fileName: 'test', status: 'done' });
-  app.imageList.push({ fileName: 'test', status: 'loading' });
-  app.imageList.push({ fileName: 'test', status: 'error' });
-}
 
 window.addI = addImageListItem;

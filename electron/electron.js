@@ -18,7 +18,8 @@ function createWindow () {
     fullscreenable: false,
     maxWidth: 1024,
     minHeight: 500,
-    minWidth: 600
+    minWidth: 600,
+    show: false
   });
 
   // Load url depends on environment
@@ -70,7 +71,7 @@ function registerIpcListeners() {
       defaultId: 0,
       title: 'Bamboo - About',
       message: `Bamboo v${package.version}\nCreated by Chris Anselmo`,
-      detail: 'Bamboo is not affiliated with Tinify, TinyPNG, or TinyJPG'
+      detail: 'Bamboo is not affiliated with or endorsed by Tinify/TinyPNG/TinyJPG.'
     });
 
     if (result === 1) {
