@@ -1,8 +1,8 @@
-import electron from 'electron';
+import { webFrame, ipcRenderer } from 'electron';
 import Vue from 'vue/dist/vue';
 import feather from 'feather-icons';
 
-const webFrame = electron.webFrame;
+import { ImageItem } from './image-item.class';
 
 // Prevent zooming on mac
 webFrame.setVisualZoomLevelLimits(1, 1);
@@ -18,6 +18,22 @@ let app = new Vue({
     imageList: [],
     apiKey: '',
     apiInputValue: ''
+  },
+  methods: {
+    loadImages: function() {
+      ipcRenderer.send('loadFile');
+    },
+    addImage: function(path) {
+      let img = new ImageItem(path);
+      this.imageList.push(img);
+    }
+  }
+});
+
+// Register ipc callbacks
+ipcRenderer.on('filesSelected', (e, args) => {
+  if (args) {
+    args.forEach(path => app.addImage(path));
   }
 });
 
