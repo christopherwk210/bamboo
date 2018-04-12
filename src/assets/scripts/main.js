@@ -1,18 +1,21 @@
+// Imports
 import { webFrame, ipcRenderer, shell, remote } from 'electron';
-process.env.NODE_ENV = remote.process.env.NODE_ENV || 'production';
+import feather from 'feather-icons';
+import settings from 'electron-settings';
+
+// Determine environment
+const env = remote.process.env.NODE_ENV || 'production';
 
 // Import the correct version of Vue
 let Vue;
-if (process.env.NODE_ENV === 'production') {
+if (env === 'production') {
   Vue = require('vue/dist/vue.min');
 } else {
   Vue = require('vue/dist/vue');
 }
 
-import feather from 'feather-icons';
-
+// Local imports
 import { ImageItem } from './image-item.class';
-import settings from 'electron-settings';
 
 // Prevent zooming on mac
 webFrame.setVisualZoomLevelLimits(1, 1);
@@ -30,6 +33,7 @@ let app = new Vue({
     apiInputValue: ''
   },
   methods: {
+    /** Trigger the load image files dialog from electron */
     loadImages: function() {
       ipcRenderer.send('loadFile');
     },
@@ -37,16 +41,18 @@ let app = new Vue({
       let img = new ImageItem(path);
       this.imageList.push(img);
     },
+
+    /** Trigger the about dialog */
     showAbout: () => ipcRenderer.send('showAbout'),
+
+    /** Open the tinify developer page */
     showApiPage: () => shell.openExternal('https://tinypng.com/developers', e => {})
   }
 });
 
 // Register ipc callbacks
 ipcRenderer.on('filesSelected', (e, args) => {
-  if (args) {
-    args.forEach(path => app.addImage(path));
-  }
+  if (args) args.forEach(path => app.addImage(path))
 });
 
 function addImageListItem() {
