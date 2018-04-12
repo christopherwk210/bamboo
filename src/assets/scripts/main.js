@@ -1,5 +1,14 @@
-import { webFrame, ipcRenderer, shell } from 'electron';
-import Vue from 'vue/dist/vue';
+import { webFrame, ipcRenderer, shell, remote } from 'electron';
+process.env.NODE_ENV = remote.process.env.NODE_ENV || 'production';
+
+// Import the correct version of Vue
+let Vue;
+if (process.env.NODE_ENV === 'production') {
+  Vue = require('vue/dist/vue.min');
+} else {
+  Vue = require('vue/dist/vue');
+}
+
 import feather from 'feather-icons';
 
 import { ImageItem } from './image-item.class';

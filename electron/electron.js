@@ -1,5 +1,5 @@
 // Imports
-const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, shell, remote } = require('electron');
 const path = require('path');
 const url = require('url');
 

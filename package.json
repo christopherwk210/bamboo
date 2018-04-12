@@ -11,7 +11,7 @@
     "build.parcel": "npm run prepare && parcel build src/index.html --out-dir=electron/dist --public-url='./' --target electron",
     "clean": "node tools/clean.js",
     "create.package.json": "node tools/create-electron-package-file.js",
-    "electron": "electron electron/ --dev",
+    "electron": "NODE_ENV=development electron electron/ --dev",
     "install.electron.dependencies": "npm --prefix ./electron install ./electron",
     "parcel": "parcel src/index.html --out-dir=tmp --target electron",
     "prepare": "npm run clean && npm run create.package.json && npm run install.electron.dependencies",
