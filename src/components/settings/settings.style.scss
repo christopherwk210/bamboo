@@ -1,0 +1,28 @@
+.settings {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  
+  background: linear-gradient(to bottom, #c5f7ff, white);
+  background-size: 100%;
+  background-repeat: no-repeat;
+
+  padding: 1em;
+
+  input[type=text] {
+    margin: 0.15em;
+    width: 100%;
+    font-family: monospace;
+    text-align: center;
+  }
+
+  .toolbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}

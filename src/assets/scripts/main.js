@@ -16,7 +16,7 @@ if (env === 'production') {
 
 // Local imports
 import { ImageItem } from './image-item.class';
-import SettingsComponent from '../../components/settings.component.vue';
+import SettingsComponent from '../../components/settings/settings.component';
 
 // Prevent zooming on mac
 webFrame.setVisualZoomLevelLimits(1, 1);
@@ -43,12 +43,20 @@ let app = new Vue({
       ipcRenderer.send('loadFile');
     },
 
+    /**
+     * Add an image to the list (and begin upload)
+     * @param {string} path Image file path
+     */
     addImage: function(path) {
       let img = new ImageItem(path);
       img.beginUpload();
       this.imageList.push(img);
     },
 
+    /**
+     * Save a new API key value
+     * @param {string} newKey New API key to save
+     */
     changeApiKey: function(newKey) {
       this.apiKey = newKey;
       settings.set('api-key', newKey);
