@@ -10,6 +10,9 @@ const package = require('./package.json');
 
 // Async
 const readFile = util.promisify(fs.readFile);
+const rename = util.promisify(fs.rename);
+const writeFile = util.promisify(fs.writeFile);
+const stat = util.promisify(fs.stat);
 
 /**
  * Registers all ipc listeners
@@ -18,7 +21,7 @@ const readFile = util.promisify(fs.readFile);
 function registerIpcListeners(mainWindow) {
 
   // Manual image adding
-  ipcMain.on('loadFile', e => {
+  ipcMain.on('loadFile', async e => {
     dialog.showOpenDialog(mainWindow, {
       title: 'Bamboo - Add Images',
       defaultPath: app.getPath('documents'),
@@ -29,7 +32,19 @@ function registerIpcListeners(mainWindow) {
         'openFile', 'multiSelections'
       ]
     }, paths => {
-      e.sender.send('filesSelected', paths);
+      let files = [];
+
+      // Get file sizes
+      for (let fPath of paths) {
+        let fileSize = await stat(fPath).size;
+        files.push({
+          path: fPath,
+          size: fileSize
+        });
+      }
+
+      // Send files
+      e.sender.send('filesSelected', files);
     });
   });
 
@@ -55,10 +70,12 @@ function registerIpcListeners(mainWindow) {
 
   // Uploading image to tinify API
   ipcMain.on('uploadImage', async (e, args) => {
+    // Get API key
     tinify.key = settings.get('api-key') || '';
 
     let sourceData;
 
+    // Read image into buffer
     try {
       sourceData = await readFile(args.path);
     } catch(e) {
@@ -69,17 +86,46 @@ function registerIpcListeners(mainWindow) {
       return;
     }
 
-    tinify.fromBuffer(sourceData).toBuffer((err, res) => {
+    // Tinify
+    tinify.fromBuffer(sourceData).toBuffer(async (err, res) => {
+      let currentCompressionCount = tinify.compressionCount;
+
       if (err) {
         e.sender.send('imageError', {
           id: args.id,
-          msg: err
+          msg: err,
+          currentCompressionCount
         });
       } else {
-        // Rename original
-        // Save buffer as same name as original
-        // Delete original with electron (by sending to recycle bin)
-        // Send the finished signal
+        // On success
+        try {
+          // Rename original file
+          await rename(args.path, args.path + '.original');
+
+          // Save buffer to original name
+          await writeFile(args.path, res);
+
+          // Get new filesize
+          let newSize = await stat(args.path).size;
+
+          // Move original file to trash
+          let moveToTrashSuccess = shell.moveItemToTrash(args.path + '.original');
+
+          // Send finished signal
+          e.sender.send('imageComplete', {
+            id: args.id,
+            movedToTrash: moveToTrashSuccess,
+            currentCompressionCount,
+            newSize
+          });
+        } catch(e) {
+          console.error(e);
+          e.sender.send('imageError', {
+            id: args.id,
+            msg: e,
+            currentCompressionCount
+          });
+        }
       }
     });
   });

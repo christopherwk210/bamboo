@@ -8,10 +8,11 @@ const Status = {
 }
 
 export class ImageItem {
-  constructor(filePath) {
-    this.id = '';
+  constructor(filePath, fileSize) {
+    this.id = this.guid();
     this.status = Status.LOADING;
     this.path = filePath;
+    this.size = fileSize;
     this.fileName = path.basename(this.path);
   }
 
@@ -20,5 +21,18 @@ export class ImageItem {
       id: this.id,
       path: this.path
     });
+  }
+
+  /**
+   * Generate random UUID
+   * Source: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+   */
+  guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
 }

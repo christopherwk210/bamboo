@@ -46,9 +46,10 @@ let app = new Vue({
     /**
      * Add an image to the list (and begin upload)
      * @param {string} path Image file path
+     * @param {number} size File size
      */
-    addImage: function(path) {
-      let img = new ImageItem(path);
+    addImage: function(path, size) {
+      let img = new ImageItem(path, size);
       img.beginUpload();
       this.imageList.push(img);
     },
@@ -75,5 +76,13 @@ let app = new Vue({
 
 // Register ipc callbacks
 ipcRenderer.on('filesSelected', (e, args) => {
-  if (args) args.forEach(path => app.addImage(path))
+  if (args) args.forEach(file => app.addImage(file.path, file.size))
+});
+
+ipcRenderer.on('imageError', (e, args) => {
+  console.log('image error reported', args);
+});
+
+ipcRenderer.on('imageComplete', (e, args) => {
+  console.log('image complete reported', args);
 });
