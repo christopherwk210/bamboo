@@ -9,6 +9,7 @@
   </head>
   <body>
     <div id="app">
+      <!-- API key requirement page -->
       <div v-if="!apiKey" class="require-api-key">
         <div>
           <i data-feather="alert-circle"></i>
@@ -20,12 +21,14 @@
         </div>
       </div>
 
+      <!-- Drop file text -->
       <div v-if="!imageList.length" class="drag-drop">
         <p>
           <i data-feather="droplet"></i> <span>Drop a PNG or JPG here!</span>
         </p>
       </div>
   
+      <!-- Image list -->
       <div v-if="imageList.length" class="image-list">
         <ul>
           <li v-for="image in imageList">
@@ -37,11 +40,15 @@
         </ul>
       </div>
 
+      <!-- Toolbar -->
       <div class="toolbar">
-        <a href="#" @click="loadImages()"><i data-feather="plus-square"></i> <span>Add Images</span></a>
-        <a href="#"><i data-feather="settings"></i> <span>Settings</span></a>
+        <a href="#" @click="loadImages()"><i data-feather="plus-circle"></i> <span>Add Images</span></a>
+        <a href="#" @click="viewingSettings = true"><i data-feather="settings"></i> <span>Settings</span></a>
         <a href="#" @click="showAbout()"><i data-feather="help-circle"></i> <span>About</span></a>
       </div>
+
+      <!-- Settings component -->
+      <settings v-on:close="viewingSettings = false" v-if="viewingSettings"></settings>      
     </div>
     <script src="assets/scripts/main.js"></script>
   </body>

@@ -6,7 +6,7 @@ const url = require('url');
 const package = require('./package.json');
 
 let mainWindow;
-let env = ~process.argv.indexOf('--dev') ? 'dev' : 'prod';
+let env = process.env.NODE_ENV || 'production';
 
 function createWindow () {
   mainWindow = new BrowserWindow({
@@ -19,7 +19,7 @@ function createWindow () {
     maxWidth: 1024,
     minHeight: 500,
     minWidth: 600,
-    show: false
+    // show: false
   });
 
   // Load url depends on environment
@@ -31,11 +31,8 @@ function createWindow () {
   });
   urls.dev = 'http://localhost:1234/';
 
-  mainWindow.loadURL(env === 'dev' ? urls.dev : urls.prod);
-
-  // if (env === 'dev') {
-    mainWindow.webContents.openDevTools();
-  // }
+  mainWindow.loadURL(env === 'development' ? urls.dev : urls.prod);
+  if (env === 'development') mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', () => {
     app.quit();

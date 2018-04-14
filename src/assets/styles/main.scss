@@ -18,6 +18,18 @@ input {
   cursor: text;
 }
 
+input[type=text] {
+  border: none;
+  padding: 0.5em;
+  font-size: 1em;
+  border: 1px solid rgba(0,0,0,0.1);
+
+  &:focus {
+    outline: none;
+    border: 1px solid rgba(0,0,0,0.5);
+  }
+}
+
 html, body {
   margin: 0;
   height: 100%;
@@ -68,17 +80,8 @@ body {
   input {
     margin: 0.15em;
     width: 100%;
-    border: none;
-    padding: 0.5em;
     font-family: monospace;
-    font-size: 1em;
     text-align: center;
-    border: 1px solid rgba(0,0,0,0.1);
-
-    &:focus {
-      outline: none;
-      border: 1px solid rgba(0,0,0,0.5);
-    }
   }
 
   button {

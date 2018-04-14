@@ -15,7 +15,7 @@
     "install.electron.dependencies": "npm --prefix ./electron install ./electron",
     "parcel": "parcel src/index.html --out-dir=tmp --target electron",
     "prepare": "npm run clean && npm run create.package.json && npm run install.electron.dependencies",
-    "start": "npm run prepare && concurrently \"npm run parcel\" \"npm run electron\" "
+    "start": "npm run prepare && concurrently \"npm run parcel\" \"sleep 2 && npm run electron\" "
   },
   "keywords": [
     "tinypng",
@@ -37,6 +37,11 @@
     "node-sass": "^4.8.3",
     "parcel-bundler": "^1.7.0",
     "rimraf": "^2.6.2",
-    "vue": "^2.5.16"
+    "vue": "^2.5.16",
+    "vue-hot-reload-api": "^2.3.0"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^1.0.0",
+    "vue-template-compiler": "^2.5.16"
   }
 }

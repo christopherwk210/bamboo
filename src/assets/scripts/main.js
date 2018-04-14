@@ -16,6 +16,7 @@ if (env === 'production') {
 
 // Local imports
 import { ImageItem } from './image-item.class';
+import SettingsComponent from '../../components/settings.component.vue';
 
 // Prevent zooming on mac
 webFrame.setVisualZoomLevelLimits(1, 1);
@@ -27,10 +28,14 @@ feather.replace();
 // Create Vue app
 let app = new Vue({
   el: '#app',
+  components: {
+    settings: SettingsComponent
+  },
   data: {
     imageList: [],
     apiKey: settings.get('api-key') || '',
-    apiInputValue: ''
+    apiInputValue: '',
+    viewingSettings: false
   },
   methods: {
     /** Trigger the load image files dialog from electron */
@@ -63,5 +68,3 @@ let app = new Vue({
 ipcRenderer.on('filesSelected', (e, args) => {
   if (args) args.forEach(path => app.addImage(path))
 });
-
-window.addI = addImageListItem;
