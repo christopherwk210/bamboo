@@ -74,15 +74,29 @@ let app = new Vue({
   mounted: () => remote.getCurrentWindow().show()
 });
 
-// Register ipc callbacks
+// On image added through file selector
 ipcRenderer.on('filesSelected', (e, args) => {
   if (args) args.forEach(file => app.addImage(file.path, file.size))
 });
 
+// On image compression error
 ipcRenderer.on('imageError', (e, args) => {
   console.log('image error reported', args);
+
+  app.imageList.some(imageItem => {
+    if (imageItem.id === args.id) {
+      imageItem.markAsError(args.msg.message);
+      return true;
+    }
+  });
 });
 
+// On image compression complete
 ipcRenderer.on('imageComplete', (e, args) => {
-  console.log('image complete reported', args);
+  app.imageList.some(imageItem => {
+    if (imageItem.id === args.id) {
+      imageItem.markAsComplete(args.newSize);
+      return true;
+    }
+  });
 });

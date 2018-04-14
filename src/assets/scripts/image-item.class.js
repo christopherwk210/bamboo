@@ -13,7 +13,19 @@ export class ImageItem {
     this.status = Status.LOADING;
     this.path = filePath;
     this.size = fileSize;
+    this.completedSize = null;
+    this.errorMessage = null;
     this.fileName = path.basename(this.path);
+  }
+
+  markAsComplete(finishedSize) {
+    this.completedSize = finishedSize;
+    this.status = Status.DONE;
+  }
+
+  markAsError(message) {
+    this.errorMessage = message;
+    this.status = Status.ERROR;
   }
 
   beginUpload() {

@@ -21,7 +21,7 @@ const stat = util.promisify(fs.stat);
 function registerIpcListeners(mainWindow) {
 
   // Manual image adding
-  ipcMain.on('loadFile', async e => {
+  ipcMain.on('loadFile', e => {
     dialog.showOpenDialog(mainWindow, {
       title: 'Bamboo - Add Images',
       defaultPath: app.getPath('documents'),
@@ -31,7 +31,7 @@ function registerIpcListeners(mainWindow) {
       properties: [
         'openFile', 'multiSelections'
       ]
-    }, paths => {
+    }, async paths => {
       let files = [];
 
       // Get file sizes
@@ -106,7 +106,7 @@ function registerIpcListeners(mainWindow) {
           await writeFile(args.path, res);
 
           // Get new filesize
-          let newSize = await stat(args.path).size;
+          let newSize = await stat(args.path);
 
           // Move original file to trash
           let moveToTrashSuccess = shell.moveItemToTrash(args.path + '.original');
