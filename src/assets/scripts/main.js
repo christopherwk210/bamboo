@@ -45,6 +45,7 @@ let app = new Vue({
 
     addImage: function(path) {
       let img = new ImageItem(path);
+      img.beginUpload();
       this.imageList.push(img);
     },
 

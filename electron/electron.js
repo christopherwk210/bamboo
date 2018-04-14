@@ -1,7 +1,14 @@
 // Imports
 const { app, BrowserWindow, ipcMain, dialog, shell, remote } = require('electron');
+const settings = require('electron-settings');
 const path = require('path');
 const url = require('url');
+const fs = require('fs');
+const util = require('util');
+
+const readFile = util.promisify(fs.readFile);
+
+let tinify = require('tinify');
 
 const package = require('./package.json');
 
@@ -19,7 +26,7 @@ function createWindow () {
     maxWidth: 1024,
     minHeight: 500,
     minWidth: 600,
-    // show: false
+    show: false
   });
 
   // Load url depends on environment
@@ -74,6 +81,36 @@ function registerIpcListeners() {
     if (result === 1) {
       shell.openExternal('https://www.github.com/', e => {});
     }
+  });
+
+  ipcMain.on('uploadImage', async (e, args) => {
+    tinify.key = settings.get('api-key') || '';
+
+    let sourceData;
+
+    try {
+      sourceData = await readFile(args.path);
+    } catch(e) {
+      e.sender.send('imageError', {
+        id: args.id,
+        msg: 'Could not read file!'
+      });
+      return;
+    }
+
+    tinify.fromBuffer(sourceData).toBuffer((err, res) => {
+      if (err) {
+        e.sender.send('imageError', {
+          id: args.id,
+          msg: err
+        });
+      } else {
+        // Rename original
+        // Save buffer as same name as original
+        // Delete original with electron (by sending to recycle bin)
+        // Send the finished signal
+      }
+    });
   });
 }
 
