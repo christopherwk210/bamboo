@@ -60,7 +60,7 @@ function registerIpcListeners(mainWindow) {
       defaultId: 0,
       title: 'Bamboo - About',
       message: `Bamboo v${package.version}\nCreated by Chris Anselmo`,
-      detail: 'Bamboo is not affiliated with or endorsed by Tinify/TinyPNG/TinyJPG.'
+      detail: 'Bamboo is not affiliated with nor endorsed by Tinify/TinyPNG/TinyJPG.'
     });
 
     if (result === 1) {
