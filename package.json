@@ -1,7 +1,7 @@
 {
   "name": "bamboo",
   "version": "1.0.0",
-  "description": "Cross-platform TinyPNG client 🎍",
+  "description": "A cross-platform TinyPNG client 🌱🎍",
   "scripts": {
     "build.win": "npm run build.parcel && npm run build.electron.win32",
     "build.mac": "npm run build.parcel && npm run build.electron.mac",
