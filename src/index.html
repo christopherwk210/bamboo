@@ -22,14 +22,14 @@
       </div>
 
       <!-- Drop file text -->
-      <div v-if="!imageList.length" class="drag-drop" @dragenter="handleDragenter" @dragleave="handleDragleave" @dragend="handleDragend" @drop="handleDrop">
+      <div v-bind:class="{ drag: draggingOver }" v-if="!imageList.length" class="drag-drop drop-target" @dragenter="handleDragenter" @dragleave="handleDragleave" @dragend="handleDragend" @drop="handleDrop">
         <p>
           <i data-feather="droplet"></i> <span>Drop a PNG or JPG here!</span>
         </p>
       </div>
   
       <!-- Image list -->
-      <div v-if="imageList.length" class="image-list" @dragenter="handleDragenter" @dragleave="handleDragleave" @dragend="handleDragend" @drop="handleDrop">
+      <div v-bind:class="{ drag: draggingOver }" v-if="imageList.length" class="image-list drop-target" @dragenter="handleDragenter" @dragleave="handleDragleave" @dragend="handleDragend" @drop="handleDrop">
         <ul>
           <li v-for="image in imageList">
             <i v-if="image.status === 'done'" data-feather="check-circle"></i>

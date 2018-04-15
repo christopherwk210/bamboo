@@ -40,7 +40,8 @@ let app = new Vue({
     apiKey: settings.get('api-key') || '',
     apiInputValue: '',
     viewingSettings: false,
-    draggingOver: false
+    draggingOver: false,
+    dragCounter: 0
   },
   methods: {
     /** Trigger the load image files dialog from electron */
@@ -67,6 +68,8 @@ let app = new Vue({
         }
       });
 
+      if (skip) return;
+
       let img = new ImageItem(path, size);
       img.beginUpload();
       this.imageList.push(img);
@@ -91,23 +94,30 @@ let app = new Vue({
 
     handleDragenter: function(e) {
       e.preventDefault();
+      this.dragCounter++;
+      e.dataTransfer.dropEffect = 'copy';
       this.draggingOver = true;
       return false;
     },
-
     handleDragleave: function(e) {
       e.preventDefault();
+      this.dragCounter--;
+      if (this.dragCounter <= 0) {
+        this.dragCounter = 0;
+        this.draggingOver = false;
+      }
+      return false;
+    },
+    handleDragend: e => {
+      e.preventDefault();
+      this.dragCounter = 0;
       this.draggingOver = false;
       return false;
     },
-
-    handleDragend: e => {
-      e.preventDefault();
-      return false;
-    },
-
     handleDrop: function(e) {
       e.preventDefault();
+      this.dragCounter = 0;
+      this.draggingOver = false;
       Array.from(e.dataTransfer.files).forEach(file => {
         if (~file.type.indexOf('png') || ~file.type.indexOf('jpg')) {
           this.addImage(file.path, file.size);
