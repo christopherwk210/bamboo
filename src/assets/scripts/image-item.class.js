@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron';
 import path from 'path';
 
-const Status = {
+export const Status = {
   DONE: 'done',
   LOADING: 'loading',
   ERROR: 'error'

@@ -15,7 +15,7 @@ if (env === 'production') {
 }
 
 // Local imports
-import { ImageItem } from './image-item.class';
+import { ImageItem, Status } from './image-item.class';
 import SettingsComponent from '../../components/settings/settings.component';
 
 // Prevent zooming on mac
@@ -54,6 +54,19 @@ let app = new Vue({
      * @param {number} size File size
      */
     addImage: function(path, size) {
+      let skip = false;
+      this.imageList.some(img => {
+        if (img.path === path) {
+          if (img.status !== Status.LOADING) {
+            img.status = Status.LOADING;
+            img.beginUpload();
+          }
+
+          skip = true;
+          return true;
+        }
+      });
+
       let img = new ImageItem(path, size);
       img.beginUpload();
       this.imageList.push(img);
