@@ -31,7 +31,7 @@
       <!-- Image list -->
       <div v-bind:class="{ drag: draggingOver }" v-if="imageList.length" class="image-list drop-target" @dragenter="handleDragenter" @dragleave="handleDragleave" @dragend="handleDragend" @drop="handleDrop">
         <ul>
-          <li v-for="image in imageList">
+          <li @click="handleItemClick($event, image)" v-for="image in imageList">
             <i v-if="image.status === 'done'" data-feather="check-circle"></i>
             <i v-if="image.status === 'loading'" data-feather="loader"></i>
             <i v-if="image.status === 'error'" data-feather="x-circle"></i>

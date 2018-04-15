@@ -1,5 +1,5 @@
 // Imports
-import { webFrame, ipcRenderer, shell, remote } from 'electron';
+import { webFrame, ipcRenderer, shell, remote, Menu, MenuItem } from 'electron';
 import feather from 'feather-icons';
 import settings from 'electron-settings';
 
@@ -89,6 +89,58 @@ let app = new Vue({
 
     /** Open the tinify developer page */
     showApiPage: () => shell.openExternal('https://tinypng.com/developers', e => {}),
+
+    /**
+     * Handles clicking on an image list item
+     * @param {Event} e
+     * @param {ImageItem} image
+     */
+    handleItemClick: function(e, image) {
+      e.preventDefault();
+      let self = this;
+
+      let template = [
+        {
+          label: 'Remove',
+          enabled: image.status === Status.LOADING ? false : true,
+          click() {
+            self.removeImage(image.id);
+          }
+        },
+        {
+          label: 'Show in Folder',
+          click() {
+            shell.showItemInFolder(image.path);
+          }
+        },
+        { type: 'separator' },
+        {
+          label: 'Remove All',
+          click() {
+            self.imageList.forEach(img => self.removeImage(img.id));
+          }
+        }
+      ];
+      
+      let context = new remote.Menu.buildFromTemplate(template);
+      context.popup(remote.getCurrentWindow(), { async: true });
+    },
+
+    /**
+     * Removes an image from the list with the given id
+     * @param {number} id
+     */
+    removeImage: function(id) {
+      this.imageList = this.imageList.filter(img => {
+        if (img.id === id && img.status !== Status.LOADING) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+
+      return true;
+    },
 
     // Drop zone drag-drop handlers
 
