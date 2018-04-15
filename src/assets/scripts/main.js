@@ -25,6 +25,10 @@ webFrame.setLayoutZoomLevelLimits(0, 0);
 // Apply icons
 feather.replace();
 
+// Prevent file dropping on document
+document.addEventListener('dragover', e => { e.preventDefault(); return false; }, false);
+document.addEventListener('drop', e => { e.preventDefault(); return false; }, false);
+
 // Create Vue app
 let app = new Vue({
   el: '#app',
@@ -35,7 +39,8 @@ let app = new Vue({
     imageList: [],
     apiKey: settings.get('api-key') || '',
     apiInputValue: '',
-    viewingSettings: false
+    viewingSettings: false,
+    draggingOver: false
   },
   methods: {
     /** Trigger the load image files dialog from electron */
@@ -67,7 +72,36 @@ let app = new Vue({
     showAbout: () => ipcRenderer.send('showAbout'),
 
     /** Open the tinify developer page */
-    showApiPage: () => shell.openExternal('https://tinypng.com/developers', e => {})
+    showApiPage: () => shell.openExternal('https://tinypng.com/developers', e => {}),
+
+    // Drop zone drag-drop handlers
+
+    handleDragenter: function(e) {
+      e.preventDefault();
+      this.draggingOver = true;
+      return false;
+    },
+
+    handleDragleave: function(e) {
+      e.preventDefault();
+      this.draggingOver = false;
+      return false;
+    },
+
+    handleDragend: e => {
+      e.preventDefault();
+      return false;
+    },
+
+    handleDrop: function(e) {
+      e.preventDefault();
+      Array.from(e.dataTransfer.files).forEach(file => {
+        if (~file.type.indexOf('png') || ~file.type.indexOf('jpg')) {
+          this.addImage(file.path, file.size);
+        }
+      });
+      return false;
+    }
   },
 
   // Only show the application window when Vue has mounted

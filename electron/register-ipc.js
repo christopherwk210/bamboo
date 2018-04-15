@@ -64,7 +64,7 @@ function registerIpcListeners(mainWindow) {
     });
 
     if (result === 1) {
-      shell.openExternal('https://www.github.com/', e => {});
+      shell.openExternal('https://github.com/christopherwk210/bamboo', e => {});
     }
   });
 
