@@ -1,5 +1,6 @@
 // Lib imports
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
+const os = require('os');
 const path = require('path');
 const url = require('url');
 
@@ -15,7 +16,7 @@ let env = process.env.NODE_ENV || 'production';
 /**
  * Creates the main browser window, called on ready
  */
-function createWindow () {
+function createWindow() {
   mainWindow = new BrowserWindow({
     width: 600,
     height: 500,
@@ -48,6 +49,24 @@ function createWindow () {
   });
 
   registerIpcListeners(mainWindow);
+}
+
+function ready() {
+  createWindow();
+
+  if (os.platform() === 'darwin') {
+    let template = [
+      {
+        label: 'Bamboo',
+        submenu: [
+          { role: 'quit' }
+        ]
+      } 
+    ];
+    Menu.setApplicationMenu( Menu.buildFromTemplate(template) );
+  } else {
+    Menu.setApplicationMenu(null);
+  }
 }
 
 app.on('ready', createWindow);
