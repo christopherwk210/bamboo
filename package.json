@@ -3,19 +3,8 @@
   "version": "1.0.0",
   "description": "A cross-platform TinyPNG client 🌱🎍",
   "scripts": {
-    "build.win": "npm run build.parcel && npm run build.electron.win32",
-    "build.mac": "npm run build.parcel && npm run build.electron.mac",
-    "build.electron.mac": "electron-packager ./electron --platform=darwin --out=./bin --ignore=/bin --asar --overwrite=true --icon=./src/assets/images/bamboo",
-    "build.electron.win": "electron-packager ./electron --platform=win32 --arch=x64 --out=./bin --ignore=/bin --asar --overwrite=true --icon=./src/assets/images/bamboo",
-    "build.electron.win32": "electron-packager ./electron --platform=win32 --arch=ia32 --out=./bin --ignore=/bin --asar --overwrite=true --icon=./src/assets/images/bamboo",
-    "build.parcel": "npm run prepare && parcel build src/index.html --out-dir=electron/dist --public-url='./' --target electron",
-    "clean": "node tools/clean.js",
-    "create.package.json": "node tools/create-electron-package-file.js",
-    "electron": "NODE_ENV=development electron electron/ --dev",
-    "install.electron.dependencies": "npm --prefix ./electron install ./electron",
-    "parcel": "parcel src/index.html --out-dir=tmp --target electron",
-    "prepare": "npm run clean && npm run create.package.json && npm run install.electron.dependencies",
-    "start": "npm run prepare && concurrently \"npm run parcel\" \"sleep 2 && npm run electron\" "
+    "build": "parcel build src/index.html --out-dir=dist/ --public-url='./'",
+    "start": "parcel src/index.html --out-dir=tmp"
   },
   "keywords": [
     "tinypng",
@@ -29,20 +18,12 @@
     "autoprefixer": "^8.2.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "concurrently": "^3.5.1",
-    "electron": "^1.8.4",
-    "electron-packager": "^12.0.0",
     "electron-settings": "^3.1.4",
     "feather-icons": "^4.7.0",
     "node-sass": "^4.8.3",
-    "parcel-bundler": "^1.7.0",
-    "rimraf": "^2.6.2",
-    "tinify": "^1.5.0",
-    "vue": "^2.5.16",
-    "vue-hot-reload-api": "^2.3.0"
+    "parcel-bundler": "^1.7.0"
   },
-  "devDependencies": {
-    "@vue/component-compiler-utils": "^1.0.0",
-    "vue-template-compiler": "^2.5.16"
+  "engines": {
+    "node": ">=9.0.0"
   }
 }

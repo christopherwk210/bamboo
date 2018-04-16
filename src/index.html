@@ -5,51 +5,35 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bamboo</title>
+    <meta name="description" content="A cross-platform TinyPNG client 🌱🎍">
+    <meta property="og:title" content="Bamboo" />
+    <meta property="og:description" content="A cross-platform TinyPNG client 🌱🎍" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://www.example.com/" />
+    <meta property="og:site_name" content="Bamboo" />
+    <meta property="og:image" content="http://example.com/image.jpg" />
+    <link rel="shortcut icon" href="assets/images/bamboo.ico">
     <link rel="stylesheet" href="assets/styles/main.scss">
   </head>
   <body>
-    <div id="app">
-      <!-- API key requirement page -->
-      <div v-if="!apiKey" class="require-api-key">
+    <div>
+      <img class="logo" src="assets/images/bamboo-med.png">
+      <h1 class="light-green">
+        <i class="light-blue">B</i>a<i class="light-blue">mb</i>oo
+      </h1>
+      <!-- <p>A cross-platform TinyPNG client 🌱🎍</p> -->
+      <div class="columns">
         <div>
-          <i data-feather="alert-circle"></i>
-          <p>In order to use this app, you must have a valid Tinify API key.</p>
-          <p>Enter your API key below:</p>
-          <input v-model.trim="apiInputValue" type="text">
-          <p><small><a href="#" @click="showApiPage()">Click here</a> to get an API key.</small></p>
-          <button v-if="apiInputValue" @click="changeApiKey(apiInputValue)">Done</button>
+          <h2>Optimize your images</h2>
+          <p>Leverage the power of the <a href="https://tinypng.com/">TinyPNG</a> API to optimize your images with smart lossy compression.</p>
+          <a href="https://github.com/christopherwk210/bamboo/releases" class="btn"><i data-feather="download"></i> <span>Download</span></a>
+          <p><a class="github" href="https://github.com/christopherwk210/bamboo">View on GitHub</a></p>
+          <p class="creds">An open-source project made by <a href="https://chrisanselmo.com/">me</a>. Logo by <a href="https://twitter.com/i_am_thirteen">this guy</a>.</p>
         </div>
+        <img class="screenshot" src="assets/images/screenshot.png">
       </div>
-
-      <!-- Drop file text -->
-      <div v-bind:class="{ drag: draggingOver }" v-if="!imageList.length" class="drag-drop drop-target" @dragenter="handleDragenter" @dragleave="handleDragleave" @dragend="handleDragend" @drop="handleDrop">
-        <p>
-          <i data-feather="droplet"></i> <span>Drop a PNG or JPG here!</span>
-        </p>
-      </div>
-  
-      <!-- Image list -->
-      <div v-bind:class="{ drag: draggingOver }" v-if="imageList.length" class="image-list drop-target" @dragenter="handleDragenter" @dragleave="handleDragleave" @dragend="handleDragend" @drop="handleDrop">
-        <ul>
-          <li @click="handleItemClick($event, image)" v-for="image in imageList">
-            <i v-if="image.status === 'done'" data-feather="check-circle"></i>
-            <i v-if="image.status === 'loading'" data-feather="loader"></i>
-            <i v-if="image.status === 'error'" data-feather="x-circle"></i>
-            <span>{{ image.fileName }}</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Toolbar -->
-      <div class="toolbar">
-        <a href="#" @click="loadImages()"><i data-feather="plus-circle"></i> <span>Add Images</span></a>
-        <a href="#" @click="viewingSettings = true"><i data-feather="settings"></i> <span>Settings</span></a>
-        <a href="#" @click="showAbout()"><i data-feather="help-circle"></i> <span>About</span></a>
-      </div>
-
-      <!-- Settings component -->
-      <settings v-on:close="viewingSettings = false" v-if="viewingSettings"></settings>      
     </div>
+
     <script src="assets/scripts/main.js"></script>
   </body>
 </html>
