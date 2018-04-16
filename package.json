@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A cross-platform TinyPNG client 🌱🎍",
   "scripts": {
-    "build": "parcel build src/index.html --out-dir=dist/ --public-url='./'",
+    "build": "node tools/build.js",
     "start": "parcel src/index.html --out-dir=tmp"
   },
   "keywords": [
