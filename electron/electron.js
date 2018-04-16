@@ -1,6 +1,5 @@
 // Lib imports
 const { app, BrowserWindow, Menu } = require('electron');
-const os = require('os');
 const path = require('path');
 const url = require('url');
 
@@ -52,24 +51,46 @@ function createWindow() {
 }
 
 function ready() {
-  createWindow();
-
-  if (os.platform() === 'darwin') {
+  if (process.platform === 'darwin') {
     let template = [
-      {
-        label: 'Bamboo',
+      { 
+        label: app.getName(), 
         submenu: [
           { role: 'quit' }
+        ] 
+      },
+      {
+        label: 'Edit',
+        submenu: [
+          { role: 'undo' },
+          { role: 'redo' },
+          { type: 'separator' },
+          { role: 'cut' },
+          { role: 'copy' },
+          { role: 'paste' },
+          { type: 'separator' },
+          { role: 'selectall' }
         ]
-      } 
+      },
+      {
+        role: 'window',
+        submenu: [
+          { role: 'minimize' },
+          { type: 'separator' },
+          { role: 'front' }
+        ]
+      }
     ];
+
     Menu.setApplicationMenu( Menu.buildFromTemplate(template) );
   } else {
     Menu.setApplicationMenu(null);
   }
+
+  createWindow();  
 }
 
-app.on('ready', createWindow);
+app.on('ready', ready);
 
 // Close app on all closed, in case it isn't closed already
 app.on('window-all-closed', () => {
