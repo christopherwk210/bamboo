@@ -171,7 +171,7 @@ let app = new Vue({
       this.dragCounter = 0;
       this.draggingOver = false;
       Array.from(e.dataTransfer.files).forEach(file => {
-        if (~file.type.indexOf('png') || ~file.type.indexOf('jpg')) {
+        if (~file.type.indexOf('png') || ~file.type.indexOf('jpg') || ~file.type.indexOf('jpeg')) {
           this.addImage(file.path, file.size);
         }
       });
