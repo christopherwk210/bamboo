@@ -2,9 +2,10 @@
   "main": "electron.js",
   "version": "1.0.1",
   "dependencies": {
-    "electron-settings": "^3.1.4",
-    "feather-icons": "^4.7.0",
-    "tinify": "^1.5.0",
-    "vue": "^2.5.16"
+    "electron-settings": "^3.2.0",
+    "feather-icons": "^4.10.0",
+    "tinify": "^1.6.0-beta.2",
+    "vue": "^2.5.22",
+    "electron-serve": "^0.2.0"
   }
 }

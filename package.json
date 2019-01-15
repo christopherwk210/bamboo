@@ -1,6 +1,6 @@
 {
   "name": "bamboo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A cross-platform TinyPNG client 🌱🎍",
   "scripts": {
     "build.win": "npm run build.parcel && npm run build.electron.win32",
@@ -13,7 +13,7 @@
     "create.package.json": "node tools/create-electron-package-file.js",
     "electron": "NODE_ENV=development electron electron/ --dev",
     "install.electron.dependencies": "npm --prefix ./electron install ./electron",
-    "parcel": "parcel src/index.html --out-dir=tmp --target electron",
+    "parcel": "parcel serve src/index.html --out-dir=tmp --target electron",
     "prepare": "npm run clean && npm run create.package.json && npm run install.electron.dependencies",
     "start": "npm run prepare && concurrently \"npm run parcel\" \"sleep 2 && npm run electron\" "
   },
@@ -26,23 +26,25 @@
   "author": "Chris Anselmo <christopherwk210@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "autoprefixer": "^8.2.0",
+    "autoprefixer": "^9.4.5",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "concurrently": "^3.5.1",
-    "electron": "^1.8.4",
-    "electron-packager": "^12.0.0",
-    "electron-settings": "^3.1.4",
-    "feather-icons": "^4.7.0",
-    "node-sass": "^4.8.3",
-    "parcel-bundler": "^1.7.0",
-    "rimraf": "^2.6.2",
-    "tinify": "^1.5.0",
-    "vue": "^2.5.16",
-    "vue-hot-reload-api": "^2.3.0"
+    "babel-preset-env": "^1.7.0",
+    "concurrently": "^4.1.0",
+    "electron": "^4.0.1",
+    "electron-packager": "^13.0.1",
+    "electron-serve": "^0.2.0",
+    "electron-settings": "^3.2.0",
+    "feather-icons": "^4.10.0",
+    "node-sass": "^4.11.0",
+    "parcel-bundler": "^1.11.0",
+    "rimraf": "^2.6.3",
+    "tinify": "^1.6.0-beta.2",
+    "vue": "^2.5.22",
+    "vue-hot-reload-api": "^2.3.1"
   },
   "devDependencies": {
-    "@vue/component-compiler-utils": "^1.0.0",
-    "vue-template-compiler": "^2.5.16"
+    "@vue/component-compiler-utils": "^2.5.0",
+    "babel-core": "^6.26.3",
+    "vue-template-compiler": "^2.5.22"
   }
 }

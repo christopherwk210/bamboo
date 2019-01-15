@@ -1,5 +1,5 @@
 // Imports
-import { webFrame, ipcRenderer, shell, remote, Menu, MenuItem } from 'electron';
+import { webFrame, ipcRenderer, shell, remote } from 'electron';
 import feather from 'feather-icons';
 import settings from 'electron-settings';
 

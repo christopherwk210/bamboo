@@ -3,7 +3,8 @@ const requiredDependencies = [
   'electron-settings',
   'feather-icons',
   'tinify',
-  'vue'
+  'vue',
+  'electron-serve'
 ];
 
 // Imports
