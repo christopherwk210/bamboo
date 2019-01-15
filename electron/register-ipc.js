@@ -32,6 +32,8 @@ function registerIpcListeners(mainWindow) {
         'openFile', 'multiSelections'
       ]
     }, async paths => {
+      if (!paths) return;
+      
       let files = [];
 
       // Get file sizes

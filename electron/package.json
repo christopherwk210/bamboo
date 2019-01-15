@@ -1,6 +1,6 @@
 {
   "main": "electron.js",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "dependencies": {
     "electron-settings": "^3.2.0",
     "feather-icons": "^4.10.0",
