@@ -42,9 +42,9 @@
 
       <!-- Toolbar -->
       <div class="toolbar">
-        <a href="#" @click="loadImages()"><i data-feather="plus-circle"></i> <span>Add Images</span></a>
-        <a href="#" @click="viewingSettings = true"><i data-feather="settings"></i> <span>Settings</span></a>
-        <a href="#" @click="showAbout()"><i data-feather="help-circle"></i> <span>About</span></a>
+        <a href="#" @click="showAbout()"><i data-feather="help-circle"></i></a>
+        <div class="add-images" @click="loadImages()"><i data-feather="plus-circle"></i></div>
+        <a href="#" @click="viewingSettings = true"><i data-feather="settings"></i></a>
       </div>
 
       <!-- Settings component -->
