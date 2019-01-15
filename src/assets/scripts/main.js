@@ -174,6 +174,10 @@ let app = new Vue({
         if (~file.type.indexOf('png') || ~file.type.indexOf('jpg') || ~file.type.indexOf('jpeg')) {
           this.addImage(file.path, file.size);
         }
+
+        if (!file.type) {
+          ipcRenderer.send('folder-dropped', file.path);
+        }
       });
       return false;
     }
@@ -208,4 +212,9 @@ ipcRenderer.on('imageComplete', (e, args) => {
       return true;
     }
   });
+});
+
+// On folder parse image
+ipcRenderer.on('manual-image-add', (e, args) => {
+  app.addImage(args[0], args[1]);
 });

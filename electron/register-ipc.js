@@ -2,6 +2,7 @@
 const { app, dialog, ipcMain, shell } = require('electron');
 const tinify = require('tinify');
 const fs = require('fs');
+const path = require('path');
 const util = require('util');
 const settings = require('electron-settings');
 
@@ -129,6 +130,25 @@ function registerIpcListeners(mainWindow) {
           });
         }
       }
+    });
+  });
+
+  ipcMain.on('folder-dropped', async (e, folderPath) => {
+    fs.readdir(folderPath, (err, files) => {
+      if (err) return;
+
+      files.forEach(file => {
+        const fullPath = path.join(folderPath, file);
+        const extension = path.extname(file);
+
+        if (extension === '.png' || extension === '.jpg' || extension === '.jpeg') {
+          fs.stat(fullPath, (err, stats) => {
+            if (err) return;
+
+            e.sender.send('manual-image-add', [fullPath, stats.size]);
+          });
+        }
+      })
     });
   });
 }
