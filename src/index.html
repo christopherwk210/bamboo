@@ -14,9 +14,9 @@
         <div>
           <i data-feather="alert-circle"></i>
           <p>In order to use this app, you must have a valid Tinify API key.</p>
-          <p>Enter your API key below:</p>
-          <input v-model.trim="apiInputValue" type="text">
-          <p><small><a href="#" @click="showApiPage()">Click here</a> to get an API key.</small></p>
+          <p style="font-size: 0.9em;">Enter your API key below:</p>
+          <input placeholder="MY-API-KEY" v-model.trim="apiInputValue" type="text">
+          <p class="get-api-key" v-if="!apiInputValue"><a href="#" @click="showApiPage()">Click here</a> to get an API key.</p>
           <button v-if="apiInputValue" @click="changeApiKey(apiInputValue)">Done</button>
         </div>
       </div>

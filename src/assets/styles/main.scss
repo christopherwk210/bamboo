@@ -61,6 +61,8 @@ body {
   left: 0;
   right: 0;
 
+  font-weight: 100;
+
   background: linear-gradient(to bottom, #c5f7ff, white);
   background: linear-gradient(to bottom, #c5f7ff, #cdf8ff);
   background-size: 100%;
@@ -74,6 +76,15 @@ body {
 
   font-size: 1.25em;
   text-align: center;
+
+  .get-api-key {
+    font-size: 14px;
+    opacity: 0.75;
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
   svg {
     width: 64px;
