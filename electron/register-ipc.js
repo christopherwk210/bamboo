@@ -15,6 +15,27 @@ const rename = util.promisify(fs.rename);
 const writeFile = util.promisify(fs.writeFile);
 const stat = util.promisify(fs.stat);
 
+function walk_through(e, folderPath) {
+  fs.readdir(folderPath, (err, files) => {
+    if (err) return;
+
+    files.forEach(file => {
+      const fullPath = path.join(folderPath, file);
+      const extension = path.extname(file);
+      fs.stat(fullPath, (err, stats) => {
+        if (err) return;
+        if (stats.isDirectory()) {
+          walk_through(e, fullPath);
+        } else {
+          if (extension === '.png' || extension === '.jpg' || extension === '.jpeg') {
+            e.sender.send('manual-image-add', [fullPath, stats.size]);
+          }
+        }
+      });
+    });
+  });
+}
+
 /**
  * Registers all ipc listeners
  * @param {Electron.BrowserWindow} mainWindow Window to show dialogs under
@@ -134,22 +155,7 @@ function registerIpcListeners(mainWindow) {
   });
 
   ipcMain.on('folder-dropped', async (e, folderPath) => {
-    fs.readdir(folderPath, (err, files) => {
-      if (err) return;
-
-      files.forEach(file => {
-        const fullPath = path.join(folderPath, file);
-        const extension = path.extname(file);
-
-        if (extension === '.png' || extension === '.jpg' || extension === '.jpeg') {
-          fs.stat(fullPath, (err, stats) => {
-            if (err) return;
-
-            e.sender.send('manual-image-add', [fullPath, stats.size]);
-          });
-        }
-      })
-    });
+    walk_through(e, folderPath);
   });
 }
 
