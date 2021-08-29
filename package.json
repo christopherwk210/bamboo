@@ -1,20 +1,18 @@
 {
   "name": "bamboo",
   "version": "2.0.0",
-  "description": "A cross-platform TinyPNG client 🌱🎍",
   "private": true,
+  "description": "A cross-platform TinyPNG client 🌱🎍",
+  "author": "Chris Anselmo <christopherwk210@gmail.com>",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps"
   },
-  "keywords": [
-    "tinypng",
-    "electron",
-    "image",
-    "compression"
-  ],
-  "author": "Chris Anselmo <christopherwk210@gmail.com>",
-  "license": "MIT",
+  "main": "background.js",
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
@@ -24,17 +22,28 @@
     "vuex": "^3.4.0"
   },
   "devDependencies": {
+    "@types/electron-devtools-installer": "^2.2.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
+    "electron": "^13.0.0",
+    "electron-devtools-installer": "^3.1.0",
     "typescript": "~4.1.5",
+    "vue-cli-plugin-electron-builder": "~2.1.1",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "keywords": [
+    "tinypng",
+    "electron",
+    "image",
+    "compression"
+  ],
+  "license": "MIT"
 }

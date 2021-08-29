@@ -1,0 +1,47 @@
+* {
+  user-select: none;
+  cursor: default;
+  font-family: 'Hind Guntur';
+  box-sizing: border-box;
+  outline: none;
+  -webkit-user-drag: none;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: linear-gradient(to bottom, #e4ffe0, white);
+  background: linear-gradient(to bottom, #e4ffe0, #eeffeb);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+}
+
+a, button {
+  cursor: pointer;
+}
+
+input {
+  cursor: text;
+}
+
+input[type=text] {
+  outline: none;
+  border: none;
+  padding: 0.5em;
+  font-size: 1em;
+  background: transparent;
+}
+
+input[type=text]:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+input[type=text]:focus {
+  background: rgba(255, 255, 255, 0.9);
+}

@@ -1,32 +1,28 @@
+<style>
+  @import url('./assets/styles/font.css');
+  @import url('./assets/styles/global.css');
+</style>
+
+<style scoped>
+  #app {
+    height: 100%;
+  }
+</style>
+
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import { electronRenderer } from './electron-renderer';
 
-#nav {
-  padding: 30px;
+@Component
+export default class App extends Vue {
+  mounted() {
+    electronRenderer.showWindow();
+  }
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>
