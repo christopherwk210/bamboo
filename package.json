@@ -1,21 +1,11 @@
 {
   "name": "bamboo",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "A cross-platform TinyPNG client 🌱🎍",
+  "private": true,
   "scripts": {
-    "build.win": "npm run build.parcel && npm run build.electron.win32",
-    "build.mac": "npm run build.parcel && npm run build.electron.mac",
-    "build.electron.mac": "electron-packager ./electron --platform=darwin --out=./bin --ignore=/bin --asar --overwrite=true --icon=./src/assets/images/bamboo",
-    "build.electron.win": "electron-packager ./electron --platform=win32 --arch=x64 --out=./bin --ignore=/bin --asar --overwrite=true --icon=./src/assets/images/bamboo",
-    "build.electron.win32": "electron-packager ./electron --platform=win32 --arch=ia32 --out=./bin --ignore=/bin --asar --overwrite=true --icon=./src/assets/images/bamboo",
-    "build.parcel": "npm run prepare && parcel build src/index.html --out-dir=electron/dist --public-url='./' --target electron",
-    "clean": "node tools/clean.js",
-    "create.package.json": "node tools/create-electron-package-file.js",
-    "electron": "NODE_ENV=development electron electron/ --dev",
-    "install.electron.dependencies": "npm --prefix ./electron install ./electron",
-    "parcel": "parcel serve src/index.html --out-dir=tmp --target electron",
-    "prepare": "npm run clean && npm run create.package.json && npm run install.electron.dependencies",
-    "start": "npm run prepare && concurrently \"npm run parcel\" \"sleep 2 && npm run electron\" "
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
   },
   "keywords": [
     "tinypng",
@@ -26,25 +16,25 @@
   "author": "Chris Anselmo <christopherwk210@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "autoprefixer": "^9.4.5",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "concurrently": "^4.1.0",
-    "electron": "^4.0.1",
-    "electron-packager": "^13.0.1",
-    "electron-serve": "^0.2.0",
-    "electron-settings": "^3.2.0",
-    "feather-icons": "^4.10.0",
-    "node-sass": "^4.11.0",
-    "parcel-bundler": "^1.11.0",
-    "rimraf": "^2.6.3",
-    "tinify": "^1.6.0-beta.2",
-    "vue": "^2.5.22",
-    "vue-hot-reload-api": "^2.3.1"
+    "core-js": "^3.6.5",
+    "vue": "^2.6.11",
+    "vue-class-component": "^7.2.3",
+    "vue-property-decorator": "^9.1.2",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
-    "@vue/component-compiler-utils": "^2.5.0",
-    "babel-core": "^6.26.3",
-    "vue-template-compiler": "^2.5.22"
-  }
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "typescript": "~4.1.5",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }
